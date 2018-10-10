@@ -3,43 +3,59 @@
 <head>
   <meta charset="utf-8">
   <title>Quantified Self - Diary</title>
-   <link rel="stylesheet" href="css/mystyles.css">
+  <link rel="stylesheet" href="css/mystyles.css">
 </head>
-<body>
-      <a href="foods.html"><button class="default-button">Create New</button></a>
-
-      <h1 class="title">
-        Bulma
-      </h1>
-
-      <p class="subtitle">
-        Modern CSS framework based on <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox">Flexbox</a>
-      </p>
-
-      <div class="field">
-        <div class="control">
-          <input class="input" type="text" placeholder="Input">
+  <body>
+    <section class='hero is-fullheight bg-img'>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div class="column is-6 is-offset-3">
+            <div class="card has-content-centered has-background-primary has-text-white">
+              <div class="card-header-title has-text-white">
+                <h2 class="is-size-2">
+                  Foods
+                </h2>
+              </div>
+            </div>
+            <div class="card has-content-centered">
+              <div class="card-content">
+                <div class="field">
+                  <div class="control">
+                    <input class='input is-primary' type="text" placeholder="Food Name" id='food-input'>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <input class='input is-primary' type="number" min='0' placeholder="Number of Calories" id='calorie-input'>
+                  </div>
+                </div>
+                  <a class="button is-primary is-outlined">
+                    Add Food
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div class="card">
+              <header class='card-header'>
+                <p class='card-header-title'>
+                  Quantified Self Pantry
+                </p>
+              </header>
+              <table class="table is-striped is-fullwidth">
+                <thead>
+                  <th>Name</th>
+                  <th>Calories</th>
+                  <th></th>
+                </thead>
+                <tbody id='foods-table'>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="field">
-        <p class="control">
-          <span class="select">
-            <select>
-              <option>Select dropdown</option>
-            </select>
-          </span>
-        </p>
-      </div>
-
-      <div class="buttons">
-        <a class="button is-primary">Primary</a>
-        <a class="button is-link">Link</a>
-      </div>
-    <script
-    src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
-
-  </script>
-  <script src="main.bundle.js"></script>
-</body>
+    </section>
+  </body>
 </html>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src="main.bundle.js"></script>
