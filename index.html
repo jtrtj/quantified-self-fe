@@ -26,10 +26,10 @@
                 </div>
                 <div class="field">
                   <div class="control">
-                    <input class='input is-primary' type="number" min='0' placeholder="Number of Calories" id='calorie-input'>
+                    <input class='input is-primary' type="text" min='0' placeholder="Number of Calories" id='calorie-input'>
                   </div>
                 </div>
-                  <a class="button is-primary is-outlined">
+                  <a class="button is-primary is-outlined" id="add-food-btn">
                     Add Food
                   </a>
                 </p>
@@ -48,6 +48,10 @@
                   <th></th>
                 </thead>
                 <tbody id='foods-table'>
+                  <tr id="table-loader-gif">
+                    <td><img src="https://media.giphy.com/media/tZaFa1m8UfzXy/giphy.gif"></td>
+                    <td><img src="https://media.giphy.com/media/tZaFa1m8UfzXy/giphy.gif"></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
