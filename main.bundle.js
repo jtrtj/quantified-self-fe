@@ -46,7 +46,7 @@
 
 	'use strict';
 
-	var Url = 'https://fast-meadow-36413.herokuapp.com';
+	var Url = 'https://fast-meadow-36413.herokuapp.com/api/v1/foods';
 
 	var fetchFoods = function fetchFoods() {
 	  fetch(Url).then(function (response) {
@@ -67,7 +67,6 @@
 	};
 
 	$('#foods-table').on('click', '.dropdown-btn', function (event) {
-	  console.log(event.currentTarget.id);
 	  dropdownToggle('#food-dropdown-' + event.currentTarget.id);
 	});
 
@@ -107,10 +106,17 @@
 	};
 
 	var deleteFood = function deleteFood(foodId) {
-	  var deleteUrl = Url + '/' + foodId;
+	  removeFoodRow(foodId);
+	  var deleteUrl = 'https://fast-meadow-36413.herokuapp.com/api/v1/foods/' + foodId;
 	  fetch(deleteUrl, {
-	    method: 'DELETE'
-	  }).then(fetchFoods);
+	    method: 'DELETE',
+	    header: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    }
+	  }).catch(function (error) {
+	    return console.error({ error: error });
+	  });
 	};
 
 	var patchFood = function patchFood(foodData, foodId) {
@@ -190,7 +196,7 @@
 	var checkCalorieInput = function checkCalorieInput() {
 	  var foodCalories = $("#calorie-input").val();
 	  if (foodCalories.match(/[a-z]/i)) {
-	    alert("Calroies must be entered as a number");
+	    alert("Calories must be entered as a number");
 	    $("#calorie-input").val(null);
 	  }
 	};
