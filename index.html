@@ -68,6 +68,63 @@
         </div>
       </div>
     </section>
+    <section class='hero is-fullheight is-danger'>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div class="column is-6 is-offset-3">
+            <div class="card has-content-centered has-background-primary has-text-white">
+              <div class="card-header-title has-text-white">
+                <h2 class="is-size-2">
+                  Meals
+                </h2>
+              </div>
+            </div>
+            <div class="card has-content-centered">
+              <div class="card-content">
+                <div class="field">
+                  <div class="control">
+                    <input class='input is-primary' type="text" placeholder="Meal Title" id='meal-title-input'>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <input class='input is-primary calorie-input' type="text" min='0' placeholder="Meal Foods" id='meal-foods-input'>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <input class='input is-primary calorie-input' type="text" min='0' placeholder="Date Eaten" id='meal-date-input'>
+                  </div>
+                </div>
+                <a class="button is-primary is-outlined" id="add-food-btn">
+                  Add Meal
+                </a>
+              </div>
+            </div>
+            <div class="card">
+              <header class='card-header'>
+                <p class='card-header-title'>
+                  Quantified Self Meals
+                </p>
+              </header>
+              <table class="table is-striped is-fullwidth">
+                <thead>
+                  <th>Title</th>
+                  <th>Foods</th>
+                  <th>Date Eaten</th>
+                </thead>
+                <tbody id='meals-table'>
+                  <tr id="table-loader-gif">
+                    <td><img src="https://media.giphy.com/media/tZaFa1m8UfzXy/giphy.gif"></td>
+                    <td><img src="https://media.giphy.com/media/tZaFa1m8UfzXy/giphy.gif"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </body>
 </html>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
