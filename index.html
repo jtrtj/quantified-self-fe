@@ -6,7 +6,47 @@
   <link rel="stylesheet" href="css/mystyles.css">
 </head>
   <body>
-    <section class='hero is-fullheight bg-img'>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item has-text-weight-bold" href="/">
+            Quantified Self
+          </a>
+      
+          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item" id="foods-nav-link">
+              Foods
+            </a>
+      
+            <a class="navbar-item" id="meals-nav-link">
+              Meals
+            </a>
+
+            <a class="navbar-item" id="calendar-nav-link">
+              Calendar
+            </a>
+      
+          </div>
+
+        </div>
+      </nav>
+    <section class="hero is-link is-fullheight hide" id="welcome-hero">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Welcome to Quantified Self
+          </h1>
+        </div>
+      </div>
+    </section>
+    <section class='hero is-fullheight bg-img hide' id="foods-hero">
       <div class="hero-body">
         <div class="container has-text-centered">
           <div class="column is-6 is-offset-3">
@@ -63,6 +103,31 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="hero is-fullheight meal-bg-img hide" id="meals-hero">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div class="column is-6 is-offset-3">
+            <div class="card has-content-centered has-background-primary has-text-white">
+              <div class="card-header-title has-text-white">
+                <h2 class="is-size-2">
+                  Meals
+                </h2>
+              </div>
+            </div>
+            <div class="card">
+              <header class='card-header'>
+                <p class='card-header-title'>
+                  Quantified Self Meals
+                </p>
+              </header>
+              <div id="meal-cards">
+                
+              </div>
             </div>
           </div>
         </div>
