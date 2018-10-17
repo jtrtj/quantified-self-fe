@@ -42,9 +42,11 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var meals = __webpack_require__(1);
 
 	var showOne = function showOne(id) {
 	  $('.hide').not(id).hide();
@@ -53,14 +55,12 @@
 
 	$('#foods-nav-link').click(function () {
 	  showOne('#foods-hero');
-	  $('#foods-hero').removeClass('.is-hidden');
 	});
 	$('#meals-nav-link').click(function () {
 	  showOne('#meals-hero');
-	  $('#meals-hero').removeClass('.is-hidden');
 	});
 
-	var Url = 'https://fast-meadow-36413.herokuapp.com/api/v1/foods';
+	var Url = 'https://qs-api-express.herokuapp.com/api/foods';
 	var foodList = void 0;
 
 	var fetchFoods = function fetchFoods() {
@@ -97,8 +97,6 @@
 	  return '<div class="card has-content-centered">\n    <div class="card-content">\n      <div class="field">\n        <div class="control">\n          <input class=\'input is-primary is-small\' type="text" value="' + food.name + '" id=\'update-food-name-' + food.id + '\'>\n        </div>\n      </div>\n      <div class="field">\n        <div class="control">\n          <input class=\'input is-primary is-small\' type="text" min=\'0\' value="' + food.calories + '" id=\'update-food-calories-' + food.id + '\'>\n        </div>\n      </div>\n      <div class="field">\n        <div class="control">\n          <a class="button is-success is-outlined is-small update-food-btn" id="' + food.id + '">\n            Update Food\n          </a>\n        </div>\n      </div>\n      <div class="field">\n        <div class="control">\n          <a class="button is-danger is-outlined is-small delete-food-btn" id="' + food.id + '">\n            Delete Food\n          </a>\n        </div>\n      </div>\n    </div>\n  </div>';
 	};
 
-	document.addEventListener('load', fetchFoods());
-
 	var dropdownToggle = function dropdownToggle(dropdownButtonId) {
 	  $(dropdownButtonId).toggleClass("is-active");
 	};
@@ -121,7 +119,7 @@
 	};
 
 	var deleteFood = function deleteFood(foodId) {
-	  var deleteUrl = 'https://fast-meadow-36413.herokuapp.com/api/v1/foods/' + foodId;
+	  var deleteUrl = 'https://qs-api-express.herokuapp.com/api/foods/' + foodId;
 	  fetch(deleteUrl, {
 	    method: 'DELETE'
 	  }).then(function (response) {
@@ -227,6 +225,137 @@
 	    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
 	  });
 	});
+
+	////ON LOAD////
+	document.addEventListener('load', function () {
+	  $('.hide').not('#welcome-hero').hide();
+	});
+	document.addEventListener('load', meals.fetchMeals());
+	document.addEventListener('load', fetchFoods());
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var mealUrl = 'https://qs-api-express.herokuapp.com/api/meals';
+	var Url = 'https://qs-api-express.herokuapp.com/api/foods';
+
+	var fetchMeals = function fetchMeals() {
+	  fetch(mealUrl).then(function (response) {
+	    return response.json();
+	  }).then(processMeals).then(fetchFoods).catch(function (error) {
+	    return console.log({ error: error });
+	  });
+	};
+
+	var fetchFoods = function fetchFoods(mealId) {
+	  fetch(Url).then(function (response) {
+	    return response.json();
+	  }).then(function (response) {
+	    return addFoodsToDropdown(response, mealId);
+	  }).catch(function (error) {
+	    return console.log({ error: error });
+	  });
+	};
+
+	var processMeals = function processMeals(meals) {
+	  $('#meal-cards').html('');
+	  return meals.forEach(function (meal) {
+	    processMeal(meal);
+	  });
+	};
+
+	var processMeal = function processMeal(meal) {
+	  var totalCalories = mealTotalCalories(meal);
+	  var dailyIntake = 2000;
+	  var remainingCalories = dailyIntake - totalCalories;
+	  $('#meal-cards').append('\n    <div class="card" id="meal-' + meal.id + '-card">\n      <header class="card-header has-background-primary">\n        <p class=\'card-header-title is-centered is-size-3\'>' + meal.name + '</p>\n      </header>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class="select">\n              <select id=\'meal-food-select-' + meal.id + '\'>\n                <option>Add to ' + meal.name + '</option>\n              </select>\n              <button class="button add-food-to-meal-btn" id=\'food-to-meal-' + meal.id + '\'>\n                <span>Add Food</span>\n              </button>\n            </div>\n            <div class="select">\n              <select id=\'meal-food-delete-' + meal.id + '\'>\n                <option>Delete from ' + meal.name + '</option>\n              </select>\n              <button class="button delete-food-from-meal-btn" id=\'food-from-meal-' + meal.id + '\'>\n                <span>Delete Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <table class="table is-striped is-fullwidth">\n          <thead>\n            <th>Name</th>\n            <th>Calories</th>\n          </thead>\n          <tbody id="foods-table-' + meal.id + '">\n            ' + mealFoodsTableRows(meal) + '\n          </tbody>\n          <tfoot>\n            <tr class="is-selected">\n              <td>Total Calories</td>\n              <td>' + totalCalories + '</td>\n            </tr>\n            <tr class="is-selected">\n              <td>Remaining Calories</td>\n              <td>' + remainingCalories + '</td>\n            </tr>\n          </tfoot>\n        </table>\n      </div>\n    </div>\n  ');
+	  fetchFoods(meal.id);
+	  fetchExistingFoods(meal);
+	};
+
+	var mealFoodsTableRows = function mealFoodsTableRows(meal) {
+	  return meal.foods.map(function (food) {
+	    return '<tr>\n              <td>' + food.name + '</td>\n              <td>' + food.calories + '</td>\n            </tr>\n            ';
+	  }).join("");
+	};
+
+	var mealTotalCalories = function mealTotalCalories(meal) {
+	  var calories = meal.foods.map(function (food) {
+	    return food.calories;
+	  });
+	  var total = calories.reduce(getSum);
+	  return total;
+	};
+
+	var getSum = function getSum(total, num) {
+	  return total + num;
+	};
+
+	var addFoodsToDropdown = function addFoodsToDropdown(foods, mealId) {
+	  foods.forEach(function (food) {
+	    $('#meal-food-select-' + mealId).append('<option id=\'select-food-option-' + food.id + '\'>' + food.name + '</option>');
+	  });
+	};
+
+	var fetchExistingFoods = function fetchExistingFoods(meal) {
+	  meal.foods.forEach(function (food) {
+	    $('#meal-food-delete-' + meal.id).append('<option id="delete-option-' + food.id + '">' + food.name + '</option>');
+	  });
+	};
+
+	$('#meal-cards').on('click', ".add-food-to-meal-btn", function () {
+	  var mealId = event.target.parentElement.id.replace(/[^0-9]+/g, "");
+	  var foodId = $(this).parent().children().children(":selected").attr('id');
+	  if (foodId == undefined) {
+	    alert("Please select a Meal");
+	  } else {
+	    var newFoodId = foodId.replace(/[^0-9]+/g, "");
+	    addFoodToMeal(newFoodId, mealId);
+	  }
+	});
+
+	var addFoodToMeal = function addFoodToMeal(foodId, mealId) {
+	  fetch(mealUrl + '/' + mealId + '/foods/' + foodId, {
+	    method: 'POST',
+	    headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({
+	      food_id: foodId,
+	      meal_id: mealId
+	    })
+	  }).then(function () {
+	    return fetchMeals();
+	  });
+	};
+
+	$('#meal-cards').on('click', ".delete-food-from-meal-btn", function () {
+	  var mealId = event.target.parentElement.id.replace(/[^0-9]+/g, "");
+	  var foodId = $(this).parent().children().children(":selected").attr('id');
+	  if (foodId == undefined) {
+	    alert("Please select a Meal");
+	  } else {
+	    var newFoodId = foodId.replace(/[^0-9]+/g, "");
+	    deleteFoodFromMeal(newFoodId, mealId);
+	  }
+	});
+
+	var deleteFoodFromMeal = function deleteFoodFromMeal(foodId, mealId) {
+	  fetch(mealUrl + '/' + mealId + '/foods/' + foodId, {
+	    method: 'DELETE'
+	  }).then(function () {
+	    return fetchMeals();
+	  });
+	};
+
+	exports.fetchMeals = fetchMeals;
 
 /***/ })
 /******/ ]);
