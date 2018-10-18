@@ -14,22 +14,33 @@ A user is also able to add a food to the database with a name and a calorie amou
 
 ![Settings Window](https://i.imgur.com/WFS2jFz.png)
 
+A meals page is also visible, and can have foods (both existing and added from the foods page) added to or removed from it.
+
+![Settings Window](https://i.imgur.com/DTKitrt.png)
+
+Users can also go to the recipes page, wherein they can check existing foods off a table and then receive recipies which include those selected foods as ingredients. This was achieved by making a fetch call to the [yummly API](https://developer.yummly.com/)
+
+![Settings Window](https://i.imgur.com/ESwQsHp.png)
+
 ## Functionality
 
 **This app was designed with the following goals in mind:**
 
-1. CRUD foods
+1. CRUD foods to a database
 
-2. Add a food to a meal
+2. Establish a database relation between foods and meals
 
 3. Compare calories to goals (meal and total)
 
-CRUD foods
-Add a food to a meal
-Compare calories to goals (meal and total)
-View calorie calculations in diary
-Data persists across refreshes
-Consume the same endpoints that you built in Rails (but from your Express server), in addition to either the Calendar or Recipe option, explained below.
+4. View calorie calculations in diary
+
+5. Create an app that the user can navigate through without having the page refreshed 
+
+6. Consume the same endpoints that built in an Express server (also made by the two authors of this project)
+
+7. Use fetch to retreive a response from an API
+
+8. To manipulate JSON objects
 
 ## Initial Setup
 
