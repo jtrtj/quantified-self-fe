@@ -11,12 +11,6 @@
           <a class="navbar-item has-text-weight-bold" href="/">
             Quantified Self
           </a>
-
-          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
         </div>
 
         <div class="navbar-menu">
@@ -114,16 +108,23 @@
                   Meals
                 </h2>
               </div>
-            </div>
-            <div class="card">
-              <header class='card-header'>
-                <p class='card-header-title'>
-                  Quantified Self Meals
-                </p>
-              </header>
-              <div id="meal-cards">
-
+              <div class="card-content">
+                <div class="control">
+                  <input class='input is-fullwidth' type="number" placeholder="Daily Calories" id='daily-calories-input'>
+                </div>
               </div>
+              <div class="card-content">
+                <a class="button is-primary" id="set-calories-btn">
+                  Set Target Calories/day
+                </a>
+              </div>
+              <div class="card-content">
+                <div id="remaining-cals">
+              </div>
+              </div>
+            </div>
+            <div id="meal-cards">
+
             </div>
           </div>
         </div>
