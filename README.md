@@ -2,7 +2,7 @@
 
 This app is currently deployed at [http://general-alley.surge.sh/](http://general-alley.surge.sh/)
 
-This app was coded by [John Roemer](https://github.com/jtrtj) and [Tristan Bambauer](https://github.com/TristanB17)
+This app was coded by [Tristan Bambauer](https://github.com/TristanB17) and [John Roemer](https://github.com/jtrtj)
 
 ## Purpose of this Repo
 
@@ -38,7 +38,7 @@ Users can also go to the recipes page, wherein they can check existing foods off
 
 6. Consume the same endpoints that built in an Express server (also made by the two authors of this project)
 
-7. Use fetch to retreive a response from an API
+7. Use fetch to retrieve a response from an API
 
 8. To manipulate JSON objects
 
@@ -59,15 +59,15 @@ Users can also go to the recipes page, wherein they can check existing foods off
   
 ## Running the Server Locally
 
-This project uses data seeded from [this Express API](https://github.com/jtrtj/qs-api-express), to run the code locally, use the command:
+This project uses data seeded from [this Express API](https://github.com/jtrtj/qs-api-express). To run the code locally, use the command:
 
 ```shell
 npm start
 ```
 
-Once the server is running, visit in your browser:
+Once the server is running, enter this address:
 
-* `http://localhost:8080/` to run your application.
+* `http://localhost:8080/` into a browser to run your application.
 
 ## Deployment
 
