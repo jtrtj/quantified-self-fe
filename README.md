@@ -2,7 +2,7 @@
 
 This app is currently deployed at [http://general-alley.surge.sh/](http://general-alley.surge.sh/)
 
-This was built by [John Roemer](https://github.com/jtrtj) and [Tristan Bambauer](https://github.com/TristanB17)
+This app was coded by [John Roemer](https://github.com/jtrtj) and [Tristan Bambauer](https://github.com/TristanB17)
 
 ## Purpose of this Repo
 
