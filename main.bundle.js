@@ -47,6 +47,7 @@
 	'use strict';
 
 	var meals = __webpack_require__(1);
+	var recipes = __webpack_require__(2);
 
 	var showOne = function showOne(id) {
 	  $('.hide').not(id).hide();
@@ -58,6 +59,9 @@
 	});
 	$('#meals-nav-link').click(function () {
 	  showOne('#meals-hero');
+	});
+	$('#recipes-nav-link').click(function () {
+	  showOne('#recipes-hero');
 	});
 
 	var Url = 'https://qs-api-express.herokuapp.com/api/foods';
@@ -231,6 +235,7 @@
 	  $('.hide').not('#welcome-hero').hide();
 	});
 	document.addEventListener('load', meals.fetchMeals());
+	document.addEventListener('load', recipes.fetchFoodRecipes());
 	document.addEventListener('load', fetchFoods());
 
 /***/ }),
@@ -274,7 +279,7 @@
 	  var totalCalories = mealTotalCalories(meal);
 	  var dailyIntake = 2000;
 	  var remainingCalories = dailyIntake - totalCalories;
-	  $('#meal-cards').append('\n    <div class="card" id="meal-' + meal.id + '-card">\n      <header class="card-header has-background-primary">\n        <p class=\'card-header-title is-centered is-size-3\'>' + meal.name + '</p>\n      </header>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class="select">\n              <select id=\'meal-food-select-' + meal.id + '\'>\n                <option>Add to ' + meal.name + '</option>\n              </select>\n              <button class="button add-food-to-meal-btn" id=\'food-to-meal-' + meal.id + '\'>\n                <span>Add Food</span>\n              </button>\n            </div>\n            <div class="select">\n              <select id=\'meal-food-delete-' + meal.id + '\'>\n                <option>Delete from ' + meal.name + '</option>\n              </select>\n              <button class="button delete-food-from-meal-btn" id=\'food-from-meal-' + meal.id + '\'>\n                <span>Delete Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <table class="table is-striped is-fullwidth">\n          <thead>\n            <th>Name</th>\n            <th>Calories</th>\n          </thead>\n          <tbody id="foods-table-' + meal.id + '">\n            ' + mealFoodsTableRows(meal) + '\n          </tbody>\n          <tfoot>\n            <tr class="is-selected">\n              <td>Total Calories</td>\n              <td>' + totalCalories + '</td>\n            </tr>\n            <tr class="is-selected">\n              <td>Remaining Calories</td>\n              <td>' + remainingCalories + '</td>\n            </tr>\n          </tfoot>\n        </table>\n      </div>\n    </div>\n  ');
+	  $('#meal-cards').append('\n    <div class="card" id="meal-' + meal.id + '-card">\n      <header class="card-header has-background-primary">\n        <p class=\'card-header-title is-centered is-size-3\'>' + meal.name + '</p>\n      </header>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class=\'select\'>\n              <select id=\'meal-food-select-' + meal.id + '\'>\n                <option>Add to ' + meal.name + '</option>\n              </select>\n              <button class="button add-food-to-meal-btn" id=\'food-to-meal-' + meal.id + '\'>\n                <span>Add Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class=\'select\'>\n              <select id=\'meal-food-delete-' + meal.id + '\'>\n                <option>Delete from ' + meal.name + '</option>\n              </select>\n              <button class="button delete-food-from-meal-btn" id=\'food-from-meal-' + meal.id + '\'>\n                <span>Delete Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <table class="table is-striped is-fullwidth">\n          <thead>\n            <th>Name</th>\n            <th>Calories</th>\n          </thead>\n          <tbody id="foods-table-' + meal.id + '">\n            ' + mealFoodsTableRows(meal) + '\n          </tbody>\n          <tfoot>\n            <tr class="is-selected">\n              <td>Total Calories</td>\n              <td>' + totalCalories + '</td>\n            </tr>\n            <tr class="is-selected">\n              <td>Remaining Calories</td>\n              <td>' + remainingCalories + '</td>\n            </tr>\n          </tfoot>\n        </table>\n      </div>\n    </div>\n  ');
 	  fetchFoods(meal.id);
 	  fetchExistingFoods(meal);
 	};
@@ -356,6 +361,74 @@
 	};
 
 	exports.fetchMeals = fetchMeals;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var foodsUrl = 'https://qs-api-express.herokuapp.com/api/foods';
+	var yummlyId = '948857f9';
+	var yummlyKey = '53ff97ce18b28c3c9f770de458820404';
+
+	var fetchFoodRecipes = function fetchFoodRecipes() {
+	  fetch(foodsUrl).then(function (response) {
+	    return response.json();
+	  }).then(function (foods) {
+	    return addFoodsToScrollMenu(foods);
+	  }).catch(function (error) {
+	    return console.log({ error: error });
+	  });
+	};
+	//
+	var addFoodsToScrollMenu = function addFoodsToScrollMenu(foods) {
+
+	  foods.forEach(function (food) {
+	    return addFoodToScrollMenu(food);
+	  });
+	};
+	//
+	var addFoodToScrollMenu = function addFoodToScrollMenu(food) {
+	  $('#food-recipes-table').append('\n    <tr class=\'recipe-row\' id=\'recipe-row-' + food.id + '\'>\n      <td>' + food.name + '</td>\n      <td>' + food.calories + '</td>\n      <td><input id=\'' + food.name + '\' type="checkbox"></td>\n    </tr>\n    ');
+	};
+
+	$("#add-foods-to-recipe-btn").click(function (event) {
+	  var foods = $(".recipe-row").children().children(":checked");
+	  var checkedFoods = Array();
+	  foods.each(function (i, v) {
+	    checkedFoods.push($(v).attr('id'));
+	  });
+	  if (!checkedFoods.length) {
+	    return alert('Choose some foods to search');
+	  } else {
+	    fetchRecipes(checkedFoods);
+	  }
+	});
+
+	var fetchRecipes = function fetchRecipes(checkedFoods) {
+	  var formattedFoods = checkedFoods.join('+').replace(/\s/g, "+");
+	  fetch('http://api.yummly.com/v1/api/recipes?_app_id=' + yummlyId + '&_app_key=' + yummlyKey + '&requirePictures=true&q=' + formattedFoods).then(function (response) {
+	    return response.json();
+	  }).then(function (recipes) {
+	    return makeRecipeCards(recipes.matches);
+	  });
+	};
+
+	var makeRecipeCards = function makeRecipeCards(recipes) {
+	  $('#recipe-cards').html("");
+	  if (!recipes.length) {
+	    return $('#recipe-cards').append('\n      <div class="card">\n        <div class="card-content">\n          <div class="media">\n            <div class="media-content">\n              <p class="title is-4">No Recipes Found :-(</p>\n            </div>\n          </div>\n        </div>\n      </div>\n      ');
+	  }
+	  recipes.forEach(function (recipe) {
+	    $('#recipe-cards').append('\n      <div class="card">\n        <div class="card-content">\n          <div class="media">\n            <div class="media-left">\n              <figure class="image is-64x64">\n                <img src="' + recipe.imageUrlsBySize["90"] + '" alt="recipe image">\n              </figure>\n            </div>\n            <div class="media-content">\n              <p class="title is-4">' + recipe.recipeName + '</p>\n              <p class="subtitle is-6">Category: ' + recipe.attributes.course.join(', ') + '</p>\n            </div>\n          </div>\n          <div class="content">\n            <p>Ingredients: ' + recipe.ingredients.join(', ') + '</p>\n            <a href="https://www.yummly.com/recipe/' + recipe.id + '" target="_blank">Link to recipe</a>\n          </div>\n        </div>\n      </div>\n      ');
+	  });
+	};
+
+	exports.fetchFoodRecipes = fetchFoodRecipes;
 
 /***/ })
 /******/ ]);
