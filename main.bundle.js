@@ -49,11 +49,13 @@
 	var meals = __webpack_require__(1);
 	var recipes = __webpack_require__(2);
 
+	///'tab' nav
 	var showOne = function showOne(id) {
 	  $('.hide').not(id).hide();
 	  $(id).show();
 	};
 
+	$('.hide').not('#welcome-hero').hide();
 	$('#foods-nav-link').click(function () {
 	  showOne('#foods-hero');
 	});
@@ -231,9 +233,6 @@
 	});
 
 	////ON LOAD////
-	document.addEventListener('load', function () {
-	  $('.hide').not('#welcome-hero').hide();
-	});
 	document.addEventListener('load', meals.fetchMeals());
 	document.addEventListener('load', recipes.fetchFoodRecipes());
 	document.addEventListener('load', fetchFoods());
@@ -268,21 +267,25 @@
 	  });
 	};
 
+	var allCalories = 0;
 	var processMeals = function processMeals(meals) {
 	  $('#meal-cards').html('');
 	  return meals.forEach(function (meal) {
 	    processMeal(meal);
+	    allCalories = allCalories + mealTotalCalories(meal);
 	  });
 	};
 
 	var processMeal = function processMeal(meal) {
 	  var totalCalories = mealTotalCalories(meal);
-	  var dailyIntake = 2000;
-	  var remainingCalories = dailyIntake - totalCalories;
-	  $('#meal-cards').append('\n    <div class="card" id="meal-' + meal.id + '-card">\n      <header class="card-header has-background-primary">\n        <p class=\'card-header-title is-centered is-size-3\'>' + meal.name + '</p>\n      </header>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class=\'select\'>\n              <select id=\'meal-food-select-' + meal.id + '\'>\n                <option>Add to ' + meal.name + '</option>\n              </select>\n              <button class="button add-food-to-meal-btn" id=\'food-to-meal-' + meal.id + '\'>\n                <span>Add Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class=\'select\'>\n              <select id=\'meal-food-delete-' + meal.id + '\'>\n                <option>Delete from ' + meal.name + '</option>\n              </select>\n              <button class="button delete-food-from-meal-btn" id=\'food-from-meal-' + meal.id + '\'>\n                <span>Delete Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <table class="table is-striped is-fullwidth">\n          <thead>\n            <th>Name</th>\n            <th>Calories</th>\n          </thead>\n          <tbody id="foods-table-' + meal.id + '">\n            ' + mealFoodsTableRows(meal) + '\n          </tbody>\n          <tfoot>\n            <tr class="is-selected">\n              <td>Total Calories</td>\n              <td>' + totalCalories + '</td>\n            </tr>\n            <tr class="is-selected">\n              <td>Remaining Calories</td>\n              <td>' + remainingCalories + '</td>\n            </tr>\n          </tfoot>\n        </table>\n      </div>\n    </div>\n  ');
+	  $('#meal-cards').append('\n    <div class="card" id="meal-' + meal.id + '-card">\n      <header class="card-header has-background-white-ter">\n        <p class=\'card-header-title\'>' + meal.name + '</p>\n      </header>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class=\'select\'>\n              <select id=\'meal-food-select-' + meal.id + '\'>\n                <option>Add to ' + meal.name + '</option>\n              </select>\n              <button class="button add-food-to-meal-btn" id=\'food-to-meal-' + meal.id + '\'>\n                <span>Add Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <div class="field">\n          <div class="control">\n            <div class=\'select\'>\n              <select id=\'meal-food-delete-' + meal.id + '\'>\n                <option>Delete from ' + meal.name + '</option>\n              </select>\n              <button class="button delete-food-from-meal-btn" id=\'food-from-meal-' + meal.id + '\'>\n                <span>Delete Food</span>\n              </button>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="card-content">\n        <table class="table is-striped is-fullwidth">\n          <thead>\n            <th>Name</th>\n            <th>Calories</th>\n          </thead>\n          <tbody id="foods-table-' + meal.id + '">\n            ' + mealFoodsTableRows(meal) + '\n          </tbody>\n          <tfoot>\n            <tr class="is-selected">\n              <td>Total Calories</td>\n              <td>' + totalCalories + '</td>\n            </tr>\n          </tfoot>\n        </table>\n      </div>\n    </div>\n  ');
 	  fetchFoods(meal.id);
 	  fetchExistingFoods(meal);
 	};
+
+	$("#set-calories-btn").click(function () {
+	  $("#remaining-cals").html('\n    <p class="is-size-3 has-text-white">Remaining Calories: ' + ($('#daily-calories-input').val() - allCalories) + '</p>\n    ');
+	});
 
 	var mealFoodsTableRows = function mealFoodsTableRows(meal) {
 	  return meal.foods.map(function (food) {
