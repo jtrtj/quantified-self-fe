@@ -1,6 +1,6 @@
 # Quantified Self (Front-end)
 
-This app is currently deployed [here](http://general-alley.surge.sh/)
+This app is currently deployed at [http://general-alley.surge.sh/](http://general-alley.surge.sh/)
 
 This was built by [John Roemer](https://github.com/jtrtj) and [Tristan Bambauer](https://github.com/TristanB17)
 
@@ -16,7 +16,7 @@ A user is also able to add a food to the database with a name and a calorie amou
 
 ## Functionality
 
-** This app was designed with the following goals in mind: 
+**This app was designed with the following goals in mind:**
 
 1. CRUD foods
 
