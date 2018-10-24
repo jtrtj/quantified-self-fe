@@ -47,7 +47,7 @@ Users can also go to the recipes page, wherein they can check existing foods off
 1. Clone this repo into the desired folder with the command
 
   ```shell
-  git clone git@github.com:TristanB17/quantified-self-fe
+  git clone git@github.com:jtrtj/quantified-self-fe.git
   ```
 2. Change into the `quantified-self-fe` directory
 
